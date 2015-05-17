@@ -1,9 +1,9 @@
 # Site wide configuration
 
-title: Site Title
+title: Marianna Bezler Notes
 locale: en_US
-description: Describe your website here.
-logo: site-logo.png
+description: Work in progress. Check Rainbow Memories.
+logo: avatar-circle.jpg
 search: true
 url: http://localhost:4000
 
@@ -31,24 +31,16 @@ exclude: ["lib", "config.rb", "Capfile", "config", "log", "Rakefile", "Rakefile.
 
 # Site owner
 owner:
-  name: Your Name
-  avatar: bio-photo.jpg
-  email: you@email.com
+  name: Marianna Bezler
+  avatar: avatar-circle.jpg
+  email: marianna.bezler@gmail.com
   disqus-shortname:
-  twitter: #username
-  facebook: #username
-  github: #username
-  stackexchange: #http://stackoverflow.com/users/123456/username
-  linkedin: #username
-  instagram: #username
-  flickr: #username
-  tumblr: #username
-  pinterest: #username
-  weibo: #userid
+  twitter: MaryanaBezler
+  github: Nefry
+  linkedin: mariannabezler
   google:
     plus: #username
     analytics:
     verify:
     ad-client:
     ad-slot:
-  bing-verify:
