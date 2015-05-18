@@ -6,7 +6,8 @@ description: Work in progress. Check Rainbow Memories.
 logo: avatar-circle.jpg
 search: true
 #url: http://localhost:4000
-url: http://nefry.github.io/marianna.im
+#url: http://nefry.github.io/marianna.im
+url: http://marianna.im
 
 # Jekyll configuration
 
