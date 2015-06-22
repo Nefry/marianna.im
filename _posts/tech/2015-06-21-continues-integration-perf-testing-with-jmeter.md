@@ -1,0 +1,129 @@
+---
+layout: post
+title: "Continues Integration Performance Testing"
+excerpt: "Jmeter, Jenkins, Taurus and Blazemeter reporting to help with continues integration performance testing"
+modified: 2015-06-21
+categories: tech
+tags: [jmeter, jenkins, taurus, blazemeter]
+image:
+  feature:
+comments: true
+date: 2015-06-21T00:00:00-00:00
+---
+
+Discovering performance problems as early as possible would save you money and time. How about finding them out right after the commit that changes code?
+Spinning up a new code? Changing environment settings? How could you be sure that all 20+ nodes of your application is healthy running with your changes? Some manual testing or one thread automated testing simply wouldn't do it. How about generate some smoke load?
+
+To solve the challenges above and even more, I'd suggest to add Smoke and Benchmark performance tests to your continues integration workflow.
+To do so I used:
+
+* [Jenkins][jenkins] as a continues integration (CI) agent
+* [Jmeter][jmeter] for load and performance testing
+* [Taurus][taurus] to orchestrate Jmeter in Jenkins
+* [Blazemeter][blazemeter] for tests reporting
+
+Nice part about the tools - they are all free.
+
+#### Pre-configuration
+Before configuring your continues integrations performance testing you should have done following:
+
+1. Configure continues deployment of your code to your environments.
+2. Develop a [Jmeter][jmeter] script to cover your key functionality: add assertions to all requests, parameterise your script with all possible input values (it's not manual testing, you can literally add all 10K search strings that your customers are using in production), make it real world like with addition of probabilities of each of the request.
+
+#### Configuring performance test in CI
+Now let's add performance tests to our CI: we'd run smoke load test with a few virtual users after each build and benchmark test for every release build.
+
+1. Install Taurus
+[Taurus][taurus] is a nice open source tool to run and configure different load/performance test setups. You could have only one script for all your environments and tests: ramp-up, smoke, benchmark etc. [Installation instructions][taurusinst].
+
+2. Create [configuration yml][taurusconfig] files for each of the environment and test type.
+There is example of yml file for smoke test ([example gist][example]):
+{% highlight yaml %}
+#! /usr/local/bin/bzt
+ ---
+ execution:
+   concurrency: 10
+   ramp-up: 30s
+   hold-for: 5m
+   scenario:
+     script: Smoke_script.jmx
+     properties:
+         my-hostname: YOUR_HOST.COM
+  
+ reporting:
+   - module: blazemeter
+     test: Smoke Test
+   - module: junit-xml
+     filename: report.xml
+     data-source: pass-fail
+   - module: fail-criteria
+     criterias:
+     - avg-rt>250ms for 30s, continue as failed
+     - failures>5% for 5s, continue as failed
+     - failures>50% for 10s, stop as failed
+     - rc5??>0 for 10s, continue as failed
+     
+ modules:
+   blazemeter:
+     token: Your Blazemeter Token
+     browser-open: false
+   console:
+     disable: true
+     
+ settings:
+   check-interval: 5
+{% endhighlight %}
+
+3. Now you can *run test* with command:```bzt smoke.yml```
+ 
+Sweet part that now you can have one [Jmeter][jmeter] script xml for all environments and test type: all you need is change your hostname and runtime settings like number of concurrent users in the [yml configuration][taurusconfig].
+
+#### Notes
+
+###### What Taurus is Doing?
+When you running Taurus (bzt) it will: 
+
+* override settings in your script and create a new one in the test directory (name will be prompted to the console)
+* start [Jmeter][jmeter] in a non-UI mode with the new script
+* disable some of the plugins from your script like Loadsophia plugin
+* send report data to [Blazemeter][blazemeter] in a real time, so you can analyze and share them on the fly
+
+###### Yml Options
+Lets walk through some of the options in the yml file, so you can understand and adjust them for your needs:
+
+* *execution* is mainly used by Taurus to override your script settings in the Jmeter script ["Thread group"][threadgroup] settings.
+Taurus is leaving settings that not specified untouched, so, for example, if you'd leave "Loop count" in your script settings hardcoded to 1, Taurus'd run only 1 iteration for each user despite your `hold-for` setting.
+* *properties* is custom parameters. In the Jmeter script you can use with [property functions][jmeterproperty]: ```${__P(my-hostname,YOUR.DEFAULT.HOST.COM)}```
+
+More about options in [Taurus docs][taurusconfig].
+
+###### Reporting
+* *reporting module blazemeter* adds your test data to your [Blazemeter][blazemeter] account reporting under the test section specified. Your API Key can be found under profile settings. You might as well use anonymous reporting, but you'd lost the feature I'm enjoying the most: comparison trends for response times, errors and hits/sec for different builds:
+
+<figure>
+	<a href="https://docs.blazemeter.com/customer/portal/articles/1742684-load-results-report"><img src="/images/2015-06-21_taurus_jmeter/blazemeter-reporting.jpg" alt="image"></a>
+	<figcaption>Blazemeter reporting trend for series of Smoke tests.</figcaption>
+</figure>
+
+Another nice trend you can configure right in the [Jenkins][jenkins] with [junit plugin][junit] and *module junit-xml* to report your criterias status:
+
+<figure>
+	<a href="https://wiki.jenkins-ci.org/display/JENKINS/JUnit+graph"><img src="/images/2015-06-21_taurus_jmeter/junit-reporting.jpg" alt="image"></a>
+	<figcaption>Jenkins Junit reporting trend for series of Smoke tests.</figcaption>
+</figure>
+
+
+You could do much more with Taurus and Jenkins. Check following [Taurus + Jenkins Youtube tutorial][tutorial].
+
+[taurus]:  https://github.com/Blazemeter/taurus
+[taurusinst]: https://github.com/Blazemeter/taurus/blob/master/docs/Installation.md
+[taurusconfig]: https://github.com/Blazemeter/taurus/blob/master/docs/ConfigSyntax.md
+[reporting]:  https://github.com/Blazemeter/taurus/blob/master/docs/Reporting.md
+[blazemeter]: https://blazemeter.com
+[example]: https://gist.github.com/Nefry/a758ef8088a6a003061a
+[jmeter]: http://jmeter.apache.org/
+[threadgroup]: http://jmeter.apache.org/usermanual/test_plan.html#thread_group
+[jmeterproperty]: http://jmeter.apache.org/usermanual/functions.html#__P
+[jenkins]: https://jenkins-ci.org/
+[junit]: https://wiki.jenkins-ci.org/display/JENKINS/JUnit+Plugin
+[tutorial]: https://www.youtube.com/watch?v=QuY0Qcdd90A
