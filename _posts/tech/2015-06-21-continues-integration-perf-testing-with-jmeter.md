@@ -104,14 +104,14 @@ More about options in [Taurus docs][taurusconfig].
 * *reporting module blazemeter* adds test data to the [Blazemeter][blazemeter] account reporting specified in the test section. Your API Key can be found under profile settings. You might as well use anonymous reporting, but you will lose the feature I'm enjoying the most: comparison trends for response times, errors and hits/sec for different builds:
 
 <figure>
-	<a href="https://docs.blazemeter.com/customer/portal/articles/1742684-load-results-report"><img src="/images/2015-06-21_taurus_jmeter/rsz_blazemeter-reporting.jpg" alt="image"></a>
+	<a href="https://docs.blazemeter.com/customer/portal/articles/1742684-load-results-report"><img src="/images/2015-06-21_taurus_jmeter/blazemeter-reporting.jpg" alt="image"></a>
 	<figcaption>Blazemeter reporting trend for series of Smoke tests.</figcaption>
 </figure>
 
 Another nice trend you can configure right in the [Jenkins][jenkins] with [junit plugin][junit] and Taurus *module junit-xml* to report your criterias status to xml file. Criterias can be specified in Taurus configuration yml, please find the example above.
 
 <figure>
-	<a href="https://wiki.jenkins-ci.org/display/JENKINS/JUnit+graph"><img src="/images/2015-06-21_taurus_jmeter/rsz_junit-reporting.jpg" alt="image"></a>
+	<a href="https://wiki.jenkins-ci.org/display/JENKINS/JUnit+graph"><img src="/images/2015-06-21_taurus_jmeter/junit-reporting.jpg" alt="image"></a>
 	<figcaption>Jenkins Junit reporting trend for series of Smoke tests.</figcaption>
 </figure>
 
