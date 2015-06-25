@@ -79,7 +79,7 @@ Now let's add performance tests to our CI: we want to run smoke load test with a
 
 
  
-Sweet part that now you can use one [Jmeter][jmeter] script xml for all environments and test types: all you need is to change hostname and runtime settings like number of concurrent users in the [yml configuration][taurusconfig].
+Sweet part that now you can use one [Jmeter][jmeter] script.jmx for all environments and test types: all you need is to change hostname and runtime settings like number of concurrent users in the [yml configuration][taurusconfig].
 
 Enjoy testing!
 
