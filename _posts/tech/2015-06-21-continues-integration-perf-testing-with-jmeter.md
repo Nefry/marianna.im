@@ -11,7 +11,7 @@ comments: true
 date: 2015-06-21T00:00:00-00:00
 ---
 
-Discovering performance problems as early as possible would save you money and time. How about finding them out right after a commit.
+Discovering performance problems as early as possible would save you money and time. How about finding them out right after a commit?
 Changing environment settings? How could you be sure that all 20+ nodes of your application are healthy running your changes? Some manual testing or one thread automated testing simply wouldn't do it. How about generate some smoke load?
 
 To solve the challenges above and even more, you can add Smoke and Benchmark performance tests to your continues integration workflow.
@@ -25,20 +25,20 @@ To do so I used:
 Nice part about the tools - they are all free.
 
 #### Prerequisites
-1. Configure continues deployment of your code to your environments.
+1. Configure continues deployment of code to environments.
 2. Create a [Jmeter][jmeter] script to cover your key functionality: add assertions to all requests, parameterise the script with all possible input values (it's not manual testing, you can literally add all 10K search strings that your customers are using in production), make it real world like with addition of probabilities of each of the request.
 
 #### Configuring performance test in CI
 Now let's add performance tests to our CI: we want to run smoke load test with a few virtual users after each build and run benchmark test for every release build.
 
-1. Install Taurus
-[Taurus][taurus] is an open source tool to run and configure different load/performance test setups. Single Jmeter script can be used to run various types of tests: ramp-up, smoke, benchmark etc. [Installation instructions][taurusinst].
+1. Install Taurus.
+[Taurus][taurus] is an open source tool to configure and run different load/performance test setups. Single Jmeter script can be used to run various types of tests: ramp-up, smoke, benchmark etc. [Installation instructions][taurusinst].
 
-2. Create [configuration yml][taurusconfig] files for each of the environment and test type. Please, find example below.
+2. Create [configuration yml][taurusconfig] files for each of the environment and test type. Check example below.
 
 3. *Run test* with command:```bzt smoke.yml```
 
-4. Configure Jenkins job to run test after the each of successful builds. Jenkins freestyle project can be used. 
+4. Configure Jenkins job to run test on each  builds. Jenkins freestyle project can be used. 
 
 ###### Taurus Yml file example for a smoke test ([example gist][example])
 {% highlight yaml %}
@@ -79,17 +79,19 @@ Now let's add performance tests to our CI: we want to run smoke load test with a
 
 
  
-Sweet part that now you can have one [Jmeter][jmeter] script xml for all environments and test type: all you need is change your hostname and runtime settings like number of concurrent users in the [yml configuration][taurusconfig].
+Sweet part that now you can use one [Jmeter][jmeter] script xml for all environments and test types: all you need is to change hostname and runtime settings like number of concurrent users in the [yml configuration][taurusconfig].
+
+Enjoy testing!
 
 #### Notes
 
 ###### What Taurus is Doing?
-When you running Taurus (bzt) it will: 
+When you running Taurus (bzt) it: 
 
-* override settings in your script and create a new one in the test directory (name will be prompted to the console)
-* start [Jmeter][jmeter] in a non-UI mode using the new script
-* disable some of the plugins from your script like Loadsophia plugin
-* send report data to [Blazemeter][blazemeter] in a real time, so you can analyze and share them on the fly
+* overrides settings in the Jmeter script and creates a new one in the test directory (name will be prompted to the console);
+* starts [Jmeter][jmeter] in a non-UI mode using the new script;
+* disables some of the plugins specified in the script like Loadsophia plugin;
+* sends report data to [Blazemeter][blazemeter] in a real time, so you can analyze and share it on the fly;
 
 ###### Yml Options
 Lets walk through some of the options in the yml file:
@@ -108,7 +110,7 @@ More about options in [Taurus docs][taurusconfig].
 	<figcaption>Blazemeter reporting trend for series of Smoke tests.</figcaption>
 </figure>
 
-Another nice trend you can configure right in the [Jenkins][jenkins] with [junit plugin][junit] and Taurus *module junit-xml* to report your criterias status to xml file. Criterias can be specified in Taurus configuration yml, please find the example above.
+Another nice trend you can configure right in the [Jenkins][jenkins] with [junit plugin][junit] and Taurus *module junit-xml* to report your criterias status to xml file. Criterias can be specified in Taurus configuration yml, check the config above.
 
 <figure>
 	<a href="https://wiki.jenkins-ci.org/display/JENKINS/JUnit+graph"><img src="/images/2015-06-21_taurus_jmeter/junit-reporting.jpg" alt="image"></a>
