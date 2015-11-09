@@ -1,13 +1,13 @@
 {
   "name": "so-simple-theme",
-  "author": "Michael Rose <michael@mademistakes.com>",
-  "homepage": "http://mmistakes.github.io/so-simple-theme/",
+  "author": "Marianna Bezler <marianna.bezler@gmail.com >",
+  "homepage": "http://marianna.im/",
   "repository": {
     "type": "git",
-    "url": "git://github.com/mmistakes/so-simple-theme.git"
+    "url": "git://github.com/maribezler/marianna.im.git"
   },
   "bugs": {
-    "url": "https://github.com/mmistakes/so-simple-theme/issues"
+    "url": "https://github.com/maribezler/marianna.im/issues"
   },
   "engines": {
     "node": ">= 0.10.0"
