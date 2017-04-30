@@ -1,0 +1,120 @@
+<!doctype html>
+<html class="no-js" lang="">
+	<head>
+		<meta charset="utf-8">
+		<meta name="description" content="">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>Tipi Tribes Prototype</title>
+
+		<style>
+			body, html {
+				margin: 0;
+				padding: 0;
+				background: #fff;
+			}
+			div.vcenter {
+				margin: 5vh auto 0;
+				height: 95vh;
+				width: 100%;
+				text-align: center;
+			}
+			div.iphone-wrapper {
+				display: inline-block;
+				width: auto;
+				height: 100%;
+				position: relative;
+			}
+			div.iphone-wrapper > img {
+				height: 100%;
+				width: auto;
+				display: block;
+			}
+			div.screen-content {
+				position: absolute;
+				top: 10.8985%;
+				bottom: 20%;
+				left: 14.65%;
+				right: 16.8%;
+				background: #000;
+				border-radius: 3px;
+				overflow: hidden;
+			}
+		</style>
+
+		<script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+		<script src="../dist/jquery.fbmessenger.min.js"></script>
+		<link rel="stylesheet" href="../dist/jquery.fbmessenger.css">
+	</head>
+	<body>
+		<div class="vcenter">
+			<div class="iphone-wrapper">
+				<img alt="iPhone 6 white" src="https://i.imgsafe.org/a2ba6b06b3.png" />
+				<div class="screen-content">
+				</div>
+			</div>
+		</div>
+		<script type="text/javascript">
+			$(function() {
+				var now = new Date();
+				$('.screen-content').fbMessenger({
+						botName: 'Tipi Tribes',
+						botBannerUrl: 'banner.jpeg',
+						botLogoUrl: 'tipi.png',
+						botWelcomeMessage: 'Tipi helps people in transition move together. Connect with like-minded people in hyperlocal group activities through Tipi’s virtual agent.',
+						likes: {
+							totalCount: 25123,
+							friendName: 'Steven',
+							otherFriendsCount: 42
+						},
+						loop: false
+					})
+					.fbMessenger('start', { delay: 4000 } )
+					.fbMessenger('message', 'user', 'Get Started', { timestamp: now, delay: 0 })
+					.fbMessenger('typingIndicator', { delay: 300 })
+					.fbMessenger('message', 'bot', 'Hey Brandi! Welcome to Tipi. I am your Virtual Agent, and I will match you with the perfect group activities.', { timestamp: now, delay: 2000 })
+					.fbMessenger('typingIndicator', { delay: 300 })
+					.fbMessenger('message', 'bot', 'Let\'s start with the basics. What are you in the mood for today?', { timestamp: now, delay: 1000 })
+                    .fbMessenger('showGenericTemplate', [
+                        {
+                            imageUrl: 'house-party-food-beverages.jpg',
+                            title: 'Food and Beverage',
+                            subtitle: 'Experience local, authentic food and beverage activities.',
+                            buttons: [
+                                'Select Food and Beverage'
+                            ]
+                        },
+                        {
+                            imageUrl: 'fitness-friends-myhealthnote.jpg',
+                            title: 'Health and Fitness',
+                            subtitle: 'Improve your life with social health and fitness activities.',
+                            buttons: [
+                                'Select Health and Fitness'
+                            ]
+                        },
+                        {
+                            imageUrl: 'arts-and-entertainment.jpg',
+                            title: 'Arts and Entertainment',
+                            subtitle: 'Enjoy your time relaxing with best arts and entertainment nearby',
+                            buttons: [
+                                'Select Arts and Entertainment'
+                            ]
+                        }
+                    ], {timestamp: now, delay: 1000})
+                    .fbMessenger('scrollGenericTemplate', 1, { delay: 1000 })
+                    .fbMessenger('scrollGenericTemplate', 2, { delay: 1000 })
+                    .fbMessenger('scrollGenericTemplate', 1, { delay: 1000 })
+                    .fbMessenger('selectGenericTemplate', 0, { delay: 1000 })
+                    .fbMessenger('typingIndicator', { delay: 500 })
+
+                    .fbMessenger('showButtonTemplate', 'How about beach volleyball today at 3pm?', ['Cool', 'Not interested'], { delay: 3000 })
+                    .fbMessenger('selectButtonTemplate', 0, { delay: 2000 })
+                    .fbMessenger('typingIndicator', { delay: 300 })
+                    .fbMessenger('showButtonTemplate', 'Here are the details. \nZilker Volleyball Courts 2200 Stratford Dr. Austin, TX 78746. Look for Steven in a red shirt near court three. \nCan we count you in?', ['Absolutely!', 'Changed my mind'], { delay: 1000 })
+                    .fbMessenger('selectButtonTemplate', 0, { delay: 3000 })
+                    .fbMessenger('typingIndicator', { delay: 300 })
+                    .fbMessenger('message', 'bot', 'Great! See you soon!', { timestamp: now, delay: 0 })
+					.fbMessenger('run');
+			});
+		</script>
+	</body>
+</html>
