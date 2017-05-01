@@ -68,13 +68,13 @@
 						},
 						loop: false
 					})
-					.fbMessenger('start', { delay: 4000 } )
+					.fbMessenger('start', { delay: 7000 } )
 					.fbMessenger('message', 'user', 'Get Started', { timestamp: now, delay: 0 })
 					.fbMessenger('typingIndicator', { delay: 300 })
 					.fbMessenger('message', 'bot', 'Hey Brandi! Welcome to Tipi. I am your Virtual Agent, and I will match you with the perfect group activities.', { timestamp: now, delay: 2000 })
-					.fbMessenger('typingIndicator', { delay: 300 })
-					.fbMessenger('message', 'bot', 'Let\'s start with the basics. What are you in the mood for today?', { timestamp: now, delay: 1000 })
-                    .fbMessenger('showGenericTemplate', [
+					.fbMessenger('typingIndicator', { delay: 1500 })
+					.fbMessenger('message', 'bot', 'Let\'s start with the basics. What are you in the mood for today?', { timestamp: now, delay: 2000 })
+					.fbMessenger('showGenericTemplate', [
                         {
                             imageUrl: 'house-party-food-beverages.jpg',
                             title: 'Food and Beverage',
@@ -99,18 +99,18 @@
                                 'Select Arts and Entertainment'
                             ]
                         }
-                    ], {timestamp: now, delay: 1000})
-                    .fbMessenger('scrollGenericTemplate', 1, { delay: 1000 })
-                    .fbMessenger('scrollGenericTemplate', 2, { delay: 1000 })
-                    .fbMessenger('scrollGenericTemplate', 1, { delay: 1000 })
-                    .fbMessenger('selectGenericTemplate', 0, { delay: 1000 })
+                    ], {timestamp: now, delay: 1500})
+                    .fbMessenger('scrollGenericTemplate', 1, { delay: 5000 })
+                    .fbMessenger('scrollGenericTemplate', 2, { delay: 3000 })
+                    .fbMessenger('scrollGenericTemplate', 1, { delay: 3000 })
+                    .fbMessenger('selectGenericTemplate', 0, { delay: 2000 })
                     .fbMessenger('typingIndicator', { delay: 500 })
 
                     .fbMessenger('showButtonTemplate', 'How about beach volleyball today at 3pm?', ['Cool', 'Not interested'], { delay: 3000 })
-                    .fbMessenger('selectButtonTemplate', 0, { delay: 2000 })
+                    .fbMessenger('selectButtonTemplate', 0, { delay: 4000 })
                     .fbMessenger('typingIndicator', { delay: 300 })
                     .fbMessenger('showButtonTemplate', 'Here are the details. \nZilker Volleyball Courts 2200 Stratford Dr. Austin, TX 78746. Look for Steven in a red shirt near court three. \nCan we count you in?', ['Absolutely!', 'Changed my mind'], { delay: 1000 })
-                    .fbMessenger('selectButtonTemplate', 0, { delay: 3000 })
+                    .fbMessenger('selectButtonTemplate', 0, { delay: 5000 })
                     .fbMessenger('typingIndicator', { delay: 300 })
                     .fbMessenger('message', 'bot', 'Great! See you soon!', { timestamp: now, delay: 0 })
 					.fbMessenger('run');
